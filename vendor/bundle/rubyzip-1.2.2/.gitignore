@@ -1,0 +1,10 @@
+.idea
+*.gem
+.bundle
+Gemfile.lock
++samples/*.zip
++samples/*.zip.*
+coverage
+pkg/
+.ruby-gemset
+.ruby-version

@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-require 'rubygems'
 
-gem 'rubyzip', path: 'vendor/rubyzip-1.2.2.gem'
-gem 'ruby-progressbar', path: 'vendor/progressbar-1.10.0.gem'
+$:.unshift(File.expand_path("vendor/bundle/rubyzip-1.2.2/lib"))
+$:.unshift(File.expand_path("vendor/bundle/ruby-progressbar-1.10.0/lib"))
 
 require 'fileutils'
 require 'zip'
@@ -20,7 +19,7 @@ if out_zip_name.nil?
   puts "Nome do arquivo destino não informado, setado como: #{out_zip_name}"
 end
 
-chunk_mb = ARGV[3]
+chunk_mb = ARGV[2]
 if chunk_mb.nil?
   chunk_mb = 50
   puts "Tamanho limite dos arquivos não informado, setado como: #{chunk_mb}mb"

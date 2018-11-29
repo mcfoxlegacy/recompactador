@@ -27,7 +27,6 @@ end
 
 base_dir = File.dirname(in_zip_or_folder)
 out_zip_path = File.join(base_dir, out_zip_name)
-chunk_mb = chunk_mb * (2 ** 20)
 
 def count_files_dir(dir_path)
   Dir.glob(File.join(dir_path, '**', '*')).select do |file|
@@ -35,9 +34,13 @@ def count_files_dir(dir_path)
   end.count
 end
 
+def mb_to_bytes(mb = 0)
+  mb.to_i * (2 ** 20)
+end
+
 def progress_bar(title, total)
   ProgressBar.create(
-      :format => '%a %B %p%% %t',
+      :format => '%a%E %B %p%% %t',
       :title => title,
       :total => total
   )
@@ -77,9 +80,9 @@ def zip_it(zip_path, files)
   zip_path
 end
 
-def finish_tmp_file(tmp_path, zip_path, stream_file = nil, bytes_limit = 0)
+def finish_tmp_file(tmp_path, zip_path, stream_file = nil, mb_limit = 0)
   tmp_size = File.size(tmp_path)
-  if tmp_size >= bytes_limit
+  if tmp_size >= mb_to_bytes(mb_limit)
     FileUtils.rm_r(zip_path) if File.file?(zip_path)
     FileUtils.mv tmp_path, zip_path
     FileUtils.rm_r(tmp_path) if File.file?(tmp_path)
@@ -94,8 +97,8 @@ def add_file_to_stream(file_path, stream_file)
   stream_file.write File.read(file_path)
 end
 
-def package_it(out_zip_path, files_dir, split_in_bytes = nil)
-  return zip_it("#{out_zip_path}.zip", files_dir) if split_in_bytes.nil?
+def package_it(out_zip_path, files_dir, split_in_mb = nil)
+  return zip_it("#{out_zip_path}.zip", files_dir) if split_in_mb.nil?
 
   zip_counter = 0
   zip_path = nil
@@ -120,7 +123,7 @@ def package_it(out_zip_path, files_dir, split_in_bytes = nil)
 
     add_file_to_stream(file_path, stream_file)
 
-    if finish_tmp_file(tmp_path, zip_path, stream_file, split_in_bytes)
+    if finish_tmp_file(tmp_path, zip_path, stream_file, split_in_mb)
       zip_path = nil
     end
 

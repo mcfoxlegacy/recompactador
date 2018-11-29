@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.expand_path("vendor/bundle/rubyzip-1.2.2/lib"))
-$:.unshift(File.expand_path("vendor/bundle/ruby-progressbar-1.10.0/lib"))
+$:.unshift(File.expand_path("vendor/rubyzip-1.2.2/lib"))
+$:.unshift(File.expand_path("vendor/ruby-progressbar-1.10.0/lib"))
 
 require 'fileutils'
 require 'zip'

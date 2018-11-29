@@ -8,7 +8,7 @@ ruby recompactador.rb zip_ou_pasta nome_prefixo_arquivo_destino tamanho_arquivo_
 **zip_ou_pasta**
 (obrigatório):
 Caminho completo para o arquivo ZIP a ser recompactado ou caminho da pasta
-contendo os arquivos a serem recompactados
+contendo os arquivos (não zip) a serem compactados.
 
 **nome_prefixo_arquivo_destino**
 (padrão: nome do arquivo sem sua extensão ou nome pasta):
